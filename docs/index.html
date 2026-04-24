@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download Sandbox OS</title>
+    <link rel="stylesheet" href="https://unpkg.com/95.css">
+    <style>
+        body {
+            background-color: #008080;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'MS Sans Serif', Arial, sans-serif;
+        }
+        .container {
+            width: 600px;
+        }
+        .header-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .preview-img {
+            width: 100%;
+            border: 2px inset #fff;
+            margin-bottom: 20px;
+        }
+        .download-section {
+            background: #c0c0c0;
+            padding: 20px;
+            border: 2px groove #fff;
+            text-align: center;
+        }
+        .feature-list {
+            text-align: left;
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 11px;
+            color: #fff;
+            text-align: center;
+        }
+        .download-btn {
+            font-weight: bold;
+            font-size: 16px;
+            padding: 10px 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="window">
+            <div class="title-bar">
+                <div class="title-bar-text">Installation Wizard - Sandbox OS</div>
+                <div class="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
+            </div>
+            <div class="window-body">
+                <div class="header-logo">
+                    <img src="icon.png" alt="Logo" width="32">
+                    <h2 style="margin:0;">Sandbox OS 1.0.0</h2>
+                </div>
+                
+                <p>Welcome to the official download page for **Sandbox OS**. Experience the ultimate nostalgia of Windows 95, supercharged with modern Agentic AI capabilities.</p>
+                
+                <img src="sandbox_prev.png" alt="Preview" class="preview-img">
+                
+                <div class="download-section">
+                    <p>Click below to download the portable standalone executable.</p>
+                    <a href="https://github.com/YOUR_USERNAME/YOUR_REPO/raw/master/dist/Sandbox%20OS%201.0.0.exe">
+                        <button class="download-btn">Download Portable EXE (v1.0.0)</button>
+                    </a>
+                    <p style="font-size:10px; margin-top:10px;">Requires Windows 10/11 x64. No installation required.</p>
+                </div>
+
+                <div class="feature-list">
+                    <h3>System Features:</h3>
+                    <ul>
+                        <li><strong>Native AI Integration</strong>: Build custom apps in seconds using the built-in App Maker.</li>
+                        <li><strong>Sandbox Assistant Live</strong>: Full-duplex voice chat with real-time captions.</li>
+                        <li><strong>Gesture Support</strong>: Control your desktop with hand movements via webcam.</li>
+                        <li><strong>Startup Manager</strong>: Fully customizable automated app launches.</li>
+                    </ul>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                    <button>Cancel</button>
+                    <button style="font-weight: bold;">Next ></button>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            Made with love by Jonathan Uwumugisha
+        </div>
+    </div>
+</body>
+</html>

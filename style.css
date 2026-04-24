@@ -1,0 +1,943 @@
+:root {
+    --window-bg: #c0c0c0;
+    --desktop-bg: #008080;
+    --button-face: #c0c0c0;
+    --button-shadow: #808080;
+    --button-highlight: #ffffff;
+    --text-color: #000000;
+    --title-bar-bg: #000080;
+    --title-bar-text: #ffffff;
+    --start-menu-width: 250px;
+}
+
+/* Windows 95 Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+    background-color: #dfdfdf; /* Dithered track background */
+}
+
+::-webkit-scrollbar-track {
+    background-color: #dfdfdf;
+    box-shadow: inset 1px 1px 0px #808080, inset -1px -1px 0px #ffffff;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--button-face);
+    border: 1px solid #000;
+    box-shadow: inset 1px 1px 0px var(--button-highlight), 
+                inset -1px -1px 0px var(--button-shadow);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #d0d0d0;
+}
+
+::-webkit-scrollbar-thumb:active {
+    box-shadow: inset 1px 1px 0px var(--button-shadow), 
+                inset -1px -1px 0px var(--button-highlight);
+}
+
+::-webkit-scrollbar-corner {
+    background-color: var(--button-face);
+}
+
+.icon-placeholder {
+    width: 32px;
+    height: 32px;
+    background-color: #808080;
+    border: 2px solid;
+    border-color: #fff #555 #555 #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: 'MS Sans Serif', 'Segoe UI', Tahoma, sans-serif;
+    user-select: none;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+#desktop {
+    background-color: var(--desktop-bg);
+    width: 100vw;
+    height: calc(100vh - 40px);
+    position: relative;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 20px;
+}
+
+.desktop-icon {
+    width: 80px;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    text-shadow: 1px 1px 1px #000;
+}
+
+.desktop-icon:hover {
+    background-color: rgba(0, 0, 128, 0.3);
+    outline: 1px dotted white;
+}
+
+.win-icon {
+    font-size: 32px;
+    margin-bottom: 5px;
+    color: #dfdfdf;
+    text-shadow: 2px 2px #000;
+}
+
+.win-icon-small {
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+    color: #444;
+}
+
+.start-menu-item:hover .win-icon-small {
+    color: white;
+}
+
+.desktop-icon span {
+    font-size: 11px;
+}
+
+/* Taskbar */
+#taskbar {
+    height: 40px;
+    background-color: var(--window-bg);
+    border-top: 2px solid #ffffff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 2px 4px;
+    z-index: 1000;
+    box-shadow: inset 1px 1px 0px #dfdfdf;
+}
+
+.win-button {
+    background-color: var(--button-face);
+    border: 2px solid;
+    border-color: var(--button-highlight) var(--button-shadow) var(--button-shadow) var(--button-highlight);
+    padding: 2px 6px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.win-button:active, .win-button.active {
+    border-color: var(--button-shadow) var(--button-highlight) var(--button-highlight) var(--button-shadow);
+    padding: 3px 5px 1px 7px;
+}
+
+#start-button {
+    font-weight: bold;
+    height: 32px;
+    margin-right: 10px;
+}
+
+#start-button img {
+    width: 20px;
+    height: 20px;
+}
+
+#active-apps {
+    flex-grow: 1;
+    height: 32px;
+    display: flex;
+    gap: 5px;
+}
+
+.taskbar-button {
+    width: 160px;
+    max-width: 160px;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.taskbar-button span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#tray {
+    border: 2px solid;
+    border-color: var(--button-shadow) var(--button-highlight) var(--button-highlight) var(--button-shadow);
+    height: 32px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    font-size: 12px;
+    background-color: var(--button-face);
+    gap: 5px;
+}
+
+#gemini-tray-icon {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    transition: all 0.2s;
+}
+
+#gemini-tray-icon.active {
+    color: #000080;
+    text-shadow: 0 0 5px #00f;
+    animation: pulse 1.5s infinite;
+}
+
+#gemini-tray-icon.inactive {
+    color: #808080;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.1); }
+    100% { opacity: 1; transform: scale(1); }
+}
+
+.settings-row {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.settings-row label {
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.settings-row input {
+    padding: 4px;
+    border: 2px solid;
+    border-color: var(--button-shadow) var(--button-highlight) var(--button-highlight) var(--button-shadow);
+    background: white;
+    outline: none;
+}
+
+.win-save-button {
+    margin-top: 10px;
+    align-self: flex-end;
+}
+
+/* Start Menu */
+#start-menu {
+    position: fixed;
+    bottom: 40px;
+    left: 0;
+    width: var(--start-menu-width);
+    background-color: var(--window-bg);
+    border: 2px solid;
+    border-color: var(--button-highlight) var(--button-shadow) var(--button-shadow) var(--button-highlight);
+    display: none;
+    flex-direction: row;
+    z-index: 999;
+}
+
+#start-menu.show {
+    display: flex;
+}
+
+#start-menu-sidebar {
+    width: 30px;
+    background: linear-gradient(0deg, #000080, #1084d0);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+#start-menu-sidebar span {
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+    transform: rotate(-90deg);
+    white-space: nowrap;
+    text-shadow: 1px 1px 0px #000;
+}
+
+#start-menu-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 2px;
+}
+
+.start-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    gap: 10px;
+    cursor: pointer;
+    position: relative;
+}
+
+.start-menu-item:hover {
+    background-color: #000080;
+    color: white;
+}
+
+.start-menu-item img {
+    width: 24px;
+    height: 24px;
+}
+
+.start-menu-item .arrow {
+    margin-left: auto;
+    font-size: 10px;
+}
+
+.menu-divider {
+    height: 1px;
+    background-color: var(--button-shadow);
+    border-bottom: 1px solid var(--button-highlight);
+    margin: 5px 2px;
+}
+
+/* Submenus */
+.submenu {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: var(--window-bg);
+    border: 2px solid;
+    border-color: var(--button-highlight) var(--button-shadow) var(--button-shadow) var(--button-highlight);
+    width: 200px;
+    display: none;
+    flex-direction: column;
+    z-index: 1001;
+}
+
+.start-menu-item:hover > .submenu {
+    display: flex;
+    color: black;
+}
+
+.submenu .start-menu-item:hover {
+    color: white;
+}
+
+/* Windows */
+.window {
+    position: absolute;
+    background-color: var(--window-bg);
+    border: 2px solid;
+    border-color: var(--button-highlight) var(--button-shadow) var(--button-shadow) var(--button-highlight);
+    box-shadow: 1px 1px 0px #000;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.title-bar {
+    background: linear-gradient(90deg, var(--title-bar-bg), #1084d0);
+    padding: 3px 3px 3px 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    font-size: 13px;
+    cursor: default;
+}
+
+.window.focused .title-bar {
+    background: linear-gradient(90deg, #000080, #1084d0);
+}
+
+.window:not(.focused) .title-bar {
+    background: #808080;
+}
+
+.title-bar-text {
+    flex-grow: 1;
+}
+
+.title-bar-controls {
+    display: flex;
+    gap: 2px;
+}
+
+.title-bar-controls button {
+    width: 16px;
+    height: 14px;
+    background-color: var(--button-face);
+    border: 1px solid;
+    border-color: var(--button-highlight) var(--button-shadow) var(--button-shadow) var(--button-highlight);
+    position: relative;
+    padding: 0;
+    cursor: pointer;
+}
+
+.title-bar-controls button:active {
+    border-color: var(--button-shadow) var(--button-highlight) var(--button-highlight) var(--button-shadow);
+}
+
+.title-bar-controls button[aria-label="Close"]::after {
+    content: "×";
+    font-family: Arial;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 12px;
+    display: block;
+}
+
+.title-bar-controls button[aria-label="Minimize"]::after {
+    content: "";
+    display: block;
+    width: 6px;
+    height: 2px;
+    background: black;
+    position: absolute;
+    bottom: 3px;
+    left: 4px;
+}
+
+.title-bar-controls button[aria-label="Maximize"]::after {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 7px;
+    border: 1px solid black;
+    border-top: 2px solid black;
+    position: absolute;
+    top: 2px;
+    left: 3px;
+}
+
+.window-body {
+    padding: 10px;
+    min-height: 100px;
+    flex: 1;
+    overflow: auto;
+}
+
+.window.maximized {
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: calc(100vh - 40px) !important;
+}
+
+.resizer {
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    cursor: nwse-resize;
+    z-index: 10;
+}
+
+.resizer::after {
+    content: "";
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    width: 4px;
+    height: 4px;
+    border-right: 2px solid #808080;
+    border-bottom: 2px solid #808080;
+}
+
+#gemini-captions {
+    position: fixed;
+    bottom: 40px;
+    left: 0;
+    right: 0;
+    height: 30px;
+    background-color: var(--window-bg);
+    border-top: 1px solid var(--button-shadow);
+    border-bottom: 1px solid var(--button-highlight);
+    display: none;
+    align-items: center;
+    padding: 0 15px;
+    font-size: 12px;
+    z-index: 998;
+    box-shadow: inset 1px 1px 0px #808080;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+#gemini-captions.show {
+    display: flex;
+}
+
+.caption-label {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #000080;
+}
+
+.caption-text {
+    color: #000;
+}
+
+.caption-error {
+    color: #800000;
+    font-weight: bold;
+}
+
+#tray div {
+    padding: 0 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s;
+}
+
+#tray div:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+#tray div.active {
+    color: #000080 !important;
+    text-shadow: 0 0 5px rgba(0, 0, 128, 0.5);
+}
+
+#tray div.inactive {
+    color: #808080;
+}
+
+/* Gesture Window Styles */
+.gesture-container {
+    position: relative;
+    width: 320px;
+    height: 240px;
+    background: #000;
+    border: 2px inset #fff;
+    overflow: hidden;
+}
+
+#gesture-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+}
+
+#gesture-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+}
+
+/* Virtual Cursor */
+#virtual-cursor {
+    position: fixed;
+    width: 32px;
+    height: 32px;
+    pointer-events: none;
+    z-index: 999999;
+    display: none;
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+    transition: transform 0.1s;
+}
+
+#virtual-cursor.active {
+    display: block;
+}
+
+#virtual-cursor.clicking {
+    transform: scale(0.8);
+}
+
+.gesture-status {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #0f0;
+    font-family: 'MS Sans Serif', sans-serif;
+    font-size: 10px;
+    padding: 2px 5px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* App Maker Chat */
+.app-maker-chat {
+    display: flex;
+    flex-direction: column;
+    height: 450px;
+    width: 550px;
+    background: #c0c0c0;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    background: #fff;
+    border: 2px inset #fff;
+    margin: 5px;
+    padding: 10px;
+    font-family: 'MS Sans Serif', Arial, sans-serif;
+    font-size: 12px;
+}
+
+.message {
+    margin-bottom: 10px;
+    line-height: 1.4;
+}
+
+.message.user {
+    color: #000080;
+    font-weight: bold;
+}
+
+.message.user::before {
+    content: "User: ";
+}
+
+.message.ai {
+    color: #000;
+}
+
+.message.ai::before {
+    content: "App Maker: ";
+    font-weight: bold;
+}
+
+.chat-input-area {
+    display: flex;
+    padding: 5px;
+    gap: 5px;
+}
+
+.chat-input-area input {
+    flex: 1;
+    border: 2px inset #fff;
+    padding: 4px 5px;
+    font-family: 'MS Sans Serif', Arial, sans-serif;
+    font-size: 12px;
+    outline: none;
+}
+
+.chat-input-area button {
+    width: 60px;
+    height: 24px;
+}
+
+.app-maker-system-msg {
+    color: #808080;
+    font-style: italic;
+    font-size: 11px;
+    margin-bottom: 5px;
+}
+
+.win95-menu {
+    background-color: var(--window-bg);
+    border: 2px solid;
+    border-color: var(--button-highlight) var(--button-shadow) var(--button-shadow) var(--button-highlight);
+    box-shadow: 2px 2px 0px #000;
+    min-width: 150px;
+    padding: 2px;
+}
+
+.menu-item {
+    padding: 5px 15px;
+    font-size: 12px;
+    cursor: default;
+}
+
+.menu-item:hover {
+    background-color: #000080;
+    color: white;
+}
+
+
+
+/* Markdown Styles in Chat */
+.chat-messages code {
+    background: #f0f0f0;
+    padding: 1px 3px;
+    border: 1px solid #808080;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 11px;
+}
+
+.chat-messages pre {
+    background: #000;
+    color: #c0c0c0;
+    padding: 8px;
+    border: 2px inset #fff;
+    overflow-x: auto;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 8px 0;
+    font-size: 11px;
+    white-space: pre-wrap;
+}
+
+.chat-messages ul, .chat-messages ol {
+    padding-left: 20px;
+    margin: 5px 0;
+}
+
+.chat-messages h1, .chat-messages h2, .chat-messages h3 {
+    font-size: 12px;
+    margin: 8px 0 4px 0;
+    text-decoration: underline;
+}
+
+.chat-messages blockquote {
+    border-left: 3px solid #808080;
+    margin: 5px 0;
+    padding-left: 10px;
+    font-style: italic;
+    color: #444;
+}
+
+.chat-messages p {
+    margin: 5px 0;
+}
+
+.message p:first-child {
+    margin-top: 0;
+}
+
+/* Login Screen */
+#login-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--desktop-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100000;
+}
+
+#login-dialog {
+    width: 400px;
+}
+
+.login-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.login-banner {
+    background: white;
+    padding: 10px;
+    border: 2px inset #fff;
+}
+
+.login-fields p {
+    font-size: 11px;
+    margin-bottom: 10px;
+}
+
+.login-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.login-row label {
+    width: 80px;
+    font-size: 11px;
+}
+
+.login-row input {
+    flex: 1;
+    border: 2px inset #fff;
+    padding: 2px 4px;
+    outline: none;
+    font-size: 11px;
+}
+
+.login-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.login-buttons button {
+    width: 75px;
+}
+
+/* Boot Screen */
+#boot-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100001;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.boot-logo {
+    margin-bottom: 50px;
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.boot-loading-container {
+    width: 300px;
+    height: 20px;
+    background: #000;
+    border: 2px solid #808080;
+    position: relative;
+    overflow: hidden;
+}
+
+.boot-loading-bar {
+    width: 60px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, #000080, #0080ff, #000080, transparent);
+    position: absolute;
+    left: -60px;
+    animation: bootLoading 2s linear infinite;
+}
+
+@keyframes bootLoading {
+    0% { left: -60px; }
+    100% { left: 300px; }
+}
+
+.boot-text {
+    margin-top: 20px;
+    font-size: 14px;
+    letter-spacing: 1px;
+}
+
+/* Help / Onboarding App */
+.help-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: #c0c0c0;
+}
+
+.help-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    border-bottom: 2px groove #fff;
+    padding-bottom: 10px;
+}
+
+.help-header i {
+    font-size: 40px;
+    color: #000080;
+    animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.help-steps {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.help-step {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.help-step-icon {
+    width: 50px;
+    height: 50px;
+    background: #fff;
+    border: 2px inset #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #000080;
+    flex-shrink: 0;
+}
+
+.help-step-content h3 {
+    margin-top: 0;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #000;
+}
+
+.help-step-content p {
+    font-size: 11px;
+    color: #333;
+    line-height: 1.4;
+}
+
+.help-footer {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px groove #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.help-footer label {
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+
+
